@@ -1,0 +1,58 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+ /*
+ 执行用时 :
+36 ms
+, 在所有 cpp 提交中击败了
+49.90%
+的用户
+内存消耗 :
+10.3 MB
+, 在所有 cpp 提交中击败了
+88.97%
+的用户
+ */
+ 
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *head = new ListNode(0);  //0表示当前新建的节点的val=0
+        ListNode *cursor = head;  //这样创建的是一个节点,所以有头结点，尾节点以及中间节点
+        bool flag=0;
+        int value,num1,num2;
+
+        while(l1!=nullptr || l2!=nullptr) //对短的链表进行补0操作
+        {
+            num1 = l1!=nullptr?l1->val:0;  //条件运算符，对于链表指向空就赋为0
+            num2 = l2!=nullptr?l2->val:0;
+            if(num1 + num2+flag>=10) 
+            {
+                value = num1 + num2 + flag - 10;
+                flag = 1;
+            }
+            else 
+            {
+                value = num1 + num2 + flag;
+                flag = 0;
+            }
+            ListNode *normal = new ListNode(value);
+            if(l1!=nullptr) l1 = l1->next;
+            if(l2!=nullptr) l2 = l2->next;
+            cursor->next = normal;
+            cursor = normal; //cursor是用来指向当前节点的指针
+        }
+        if(flag==1) 
+        {
+            ListNode *normal = new ListNode(1);
+            cursor->next = normal;
+        }
+        return head->next;
+    }
+};
