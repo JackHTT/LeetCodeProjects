@@ -41,3 +41,39 @@ public:
         return vec1;
     }
 };
+
+//总共耗时144ms，主要更改了查找vector的最大值和最小值部分.
+class Solution {
+public:
+    //可以先用暴力的方法做，之后再优化
+    vector<int> twoSum(vector<int>& nums, int target) 
+    {
+	vector<int> vec, vec1;
+	vector<int>::iterator it_find;
+	vector<int>::iterator iter = nums.begin();
+
+	int chazhi,last_i;
+	//首先对nums进行排序，得到新的vector.这部分是为了获得vector的最大值和最小值
+	vector<int>::iterator p = max_element(nums.begin(), nums.end());
+	vector<int>::iterator q = min_element(nums.begin(), nums.end());
+		
+	while(iter!=nums.end())
+	{
+		last_i = iter - nums.begin();
+		chazhi = target - *iter;
+		iter++;
+		if (chazhi<*q || chazhi>*p)   continue;
+		else {
+			it_find = find(iter, nums.end(), chazhi);
+			if (it_find != nums.end()) //找到了
+			{
+				vec1.push_back(last_i);
+				vec1.push_back(it_find-iter+last_i+1);
+                    		break;
+			}
+			else  continue;
+		}
+	}
+        return vec1;
+    }
+};
