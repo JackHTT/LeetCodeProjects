@@ -1,0 +1,43 @@
+//总耗时156ms
+class Solution {
+public:
+    //可以先用暴力的方法做，之后再优化
+    vector<int> twoSum(vector<int>& nums, int target) 
+    {
+		vector<int> vec, vec1;
+		vector<int>::iterator it_find, it_find1, it_find2;
+		int chazhi,last,last_i;
+		//int shuzu[2];
+		//首先对nums进行排序，得到新的vector.
+		vec = nums;  //先复制
+		sort(vec.begin(), vec.end());
+
+		vector<int>::iterator iter = nums.begin();
+		int min = vec[0];
+		int max = vec[vec.size()-1];  //vec.end()是不存在的
+		
+		while(iter!=nums.end())
+		{
+			last = *iter;
+			last_i = iter - nums.begin();
+			chazhi = target - *iter;
+			iter++;
+			if (chazhi<min || chazhi>max) {
+				continue;
+			} 
+			else {
+				it_find = find(iter, nums.end(), chazhi);
+				if (it_find != nums.end()) //找到了
+				{
+					vec1.push_back(last_i);
+					vec1.push_back(it_find-iter+last_i+1);
+                    break;
+				}
+				else {
+					continue;
+				}
+			}
+		}
+        return vec1;
+    }
+};
